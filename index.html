@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="item01minus" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="item01qty" type="text" class="form-control text-center" value="1">
+                           <button id="item01plus" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$ <span id="item01value">1219</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="item02minus" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="item02qty" type="text" class="form-control text-center" value="1">
+                           <button id="item02plus" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$ <span id="item02value">59</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax (15%):</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$ <span id="subtotal">1,278</span></h5>
+                        <h5>$ <span id="tax">191.7</span></h5>
+                        <h5>$ <span id="total">1,465.55</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+</body>
+<script>
+      clickButton('item01plus', 'item01qty', 1, 1219, 'item01value');
+      clickButton('item01minus', 'item01qty', -1, 1219, 'item01value');
+      clickButton('item02minus', 'item02qty', -1, 59, 'item02value');
+      clickButton('item02plus', 'item02qty', 1, 59, 'item02value');
+
+      function clickButton(id, qty, increase, price, itemValue) {
+      const sign = document.getElementById(id);
+      sign.addEventListener("click", function() {
+      qtyValue = document.getElementById(qty).value;
+      const QtyNumber = parseFloat(qtyValue);
+      const itemNewQty = QtyNumber + increase;
+      const itemNewValue = itemNewQty * price;
+      document.getElementById(qty).value = itemNewQty;
+      document.getElementById(itemValue).innerText = itemNewValue;
+      summarize(id);
+      })
+      }
+
+      function updateSpan(id) {
+         const currentText = document.getElementById(id).innerText
+         const number = parseFloat(currentText);
+         return number
+      }
+
+      function summarize(id) {
+      const current01number = updateSpan('item01value');
+      const current02number = updateSpan('item02value');
+      const NewSubTValue = current01number + current02number;
+      const NewVatValue = NewSubTValue * .15;
+      const NewTotalValue = NewVatValue + NewSubTValue;
+      document.getElementById('subtotal').innerText = NewSubTValue;
+      document.getElementById('tax').innerText = NewVatValue;
+      document.getElementById('total').innerText = NewTotalValue;
+      }
+</script>
+</html>
